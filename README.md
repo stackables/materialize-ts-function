@@ -1,3 +1,6 @@
+[![npm](https://img.shields.io/npm/v/materialize-ts-function?label=materialize-ts-function&logo=npm)](https://www.npmjs.com/package/materialize-ts-function)
+[![codecov](https://codecov.io/gh/stackables/materialize-ts-function/branch/main/graph/badge.svg?token=x1DmWF8EId)](https://codecov.io/gh/stackables/materialize-ts-function)
+
 # Materialize typescript functions
 
 A simple cli command to materialize the response of a typescript async function during build time.
