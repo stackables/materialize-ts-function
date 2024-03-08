@@ -11,7 +11,7 @@ export async function materialize1() {
 
 /**
  * @materialized
- * @if process.env.DEBUG==="1"
+ * @if process.env.DEBUG === "1"
  */
 export async function materialize2() {
 	return {

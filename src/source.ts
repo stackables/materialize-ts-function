@@ -12,6 +12,10 @@ interface Target {
 	condition?: string;
 }
 
+const isTest =
+	process.env.NODE_ENV === "test" &&
+	process.env.npm_package_name === "materialize-ts-function";
+
 async function materializeFunctionInFile(source: SourceFile, target: Target) {
 	const localPath = relative(cwd(), source.getFilePath());
 	const func = source.getFunction(target.name);
@@ -42,7 +46,8 @@ async function materializeFunctionInFile(source: SourceFile, target: Target) {
 		return;
 	}
 
-	source.addStatements(`import { materialize } from "../../src"`);
+	// prettier-ignore
+	source.addStatements(`import { materialize } from "${isTest ? "../../src" : "materialize-ts-function"}"`);
 	// prettier-ignore
 	source.addStatements(`materialize(${func.getName()}, ${target.condition ?? "undefined"}).then(console.log).catch((e:any) => console.error(e.message))`);
 	await source.save();
