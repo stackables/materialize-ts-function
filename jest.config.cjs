@@ -1,6 +1,6 @@
 module.exports = {
     transform: {
-        "\\.[jt]sx?$": ["esbuild-jest", { format: "esm" }],
+        "\\.[jt]sx?$": ["esbuild-jest"],
     },
     moduleFileExtensions: ["ts", "js"],
     extensionsToTreatAsEsm: ['.ts'],

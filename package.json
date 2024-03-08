@@ -14,7 +14,7 @@
 	],
 	"scripts": {
 		"prepack": "tsc",
-		"test": "NODE_OPTIONS=\"--experimental-vm-modules\" jest",
+		"test": "jest --runInBand",
 		"semantic-release": "semantic-release -b main"
 	},
 	"repository": {

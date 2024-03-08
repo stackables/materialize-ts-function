@@ -16,8 +16,7 @@ describe("test ficture", () => {
 	});
 
 	test("expect both materialize1 and materialize2 to mutate", async () => {
-		//@ts-ignore
-		const module = await import("./fixtures/test-cases.ts");
+		const module = require("./fixtures/test-cases.ts");
 		expect(await module.materialize1()).not.toEqual(
 			await module.materialize1()
 		);
@@ -28,14 +27,13 @@ describe("test ficture", () => {
 
 	test("modify source", async () => {
 		const current = await readFile("tests/fixtures/test-cases.ts");
-		await main();
+		await main("tests/fixtures/test-cases.ts");
 		const replaced = await readFile("tests/fixtures/test-cases.ts");
 		expect(current).not.toEqual(replaced);
 	});
 
 	test("expect only materialize2 to mutate", async () => {
-		//@ts-ignore
-		const module = await import("./fixtures/test-cases.ts");
+		const module = require("./fixtures/test-cases.ts");
 		expect(await module.materialize1()).toEqual(await module.materialize1());
 		expect(await module.materialize2()).not.toEqual(
 			await module.materialize2()

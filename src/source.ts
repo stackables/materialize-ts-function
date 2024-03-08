@@ -12,7 +12,10 @@ interface Target {
 	condition?: string;
 }
 
-const selfLocation = join(__dirname, "../../");
+const selfLocation = join(
+	__dirname,
+	__dirname.endsWith("build") ? "../../" : "./"
+);
 
 async function materializeFunctionInFile(source: SourceFile, target: Target) {
 	const localPath = relative(cwd(), source.getFilePath());
@@ -47,15 +50,13 @@ async function materializeFunctionInFile(source: SourceFile, target: Target) {
 	// prettier-ignore
 	source.addStatements(`import { materialize } from "${selfLocation}"`);
 	// prettier-ignore
-	source.addStatements(`materialize(${func.getName()}, ${target.condition ?? "undefined"}).then(console.log).catch((e:any) => console.error(e.message))`);
+	source.addStatements(`materialize/*remove*/(${func.getName()}, ${target.condition ?? "undefined"}).then(console.log).catch((e:any) => console.error(e.message))`);
 	await source.save();
+	await source.refreshFromFileSystem();
 
 	let error: string | undefined = undefined;
 	try {
 		const result = await execAsync(`ts-node ${source.getFilePath()}`);
-
-		await source.refreshFromFileSystem();
-
 		try {
 			const data = extractResponse(result.stdout);
 			func.setBodyText(`/* __materialized__ */\nreturn ${data}`);
@@ -63,11 +64,16 @@ async function materializeFunctionInFile(source: SourceFile, target: Target) {
 			error = result.stderr.trim();
 		}
 	} catch (e: any) {
-		await source.refreshFromFileSystem();
 		error = e.message.trim();
 	}
 
-	source.removeStatement(source.getStatements().length - 1);
+	const st = source.getStatements();
+	st.forEach((s) => {
+		if (s.getText().startsWith("materialize/*remove*/(")) {
+			s.remove();
+		}
+	});
+
 	source.organizeImports();
 	await source.save();
 	log(`${error ?? "completed"}`);
