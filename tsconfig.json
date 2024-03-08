@@ -1,0 +1,35 @@
+{
+  "extends": "@tsconfig/node20/tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "strict": true,
+    "strictNullChecks": true,
+    "declaration": true,
+    "noImplicitOverride": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "target": "ES2022",
+    "lib": [
+      "ES2022",
+      "es2015.collection",
+      "es2015.iterable",
+      "DOM"
+    ],
+    "rootDir": ".",
+    "outDir": "build",
+    "types": [
+      "jest",
+      "node"
+    ]
+  },
+  "exclude": [
+    "**/node_modules",
+    "**/.*/"
+  ],
+  "include": [
+    "src",
+    "tests"
+  ]
+}
