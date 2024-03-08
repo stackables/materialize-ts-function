@@ -1,5 +1,5 @@
 import { exec } from "child_process";
-import { relative } from "path";
+import { join, relative } from "path";
 import { cwd } from "process";
 import { Project, SourceFile } from "ts-morph";
 import { promisify } from "util";
@@ -12,9 +12,7 @@ interface Target {
 	condition?: string;
 }
 
-const isTest =
-	process.env.NODE_ENV === "test" &&
-	process.env.npm_package_name === "materialize-ts-function";
+const selfLocation = join(__dirname, "../../");
 
 async function materializeFunctionInFile(source: SourceFile, target: Target) {
 	const localPath = relative(cwd(), source.getFilePath());
@@ -47,7 +45,7 @@ async function materializeFunctionInFile(source: SourceFile, target: Target) {
 	}
 
 	// prettier-ignore
-	source.addStatements(`import { materialize } from "${isTest ? "../../src" : "materialize-ts-function"}"`);
+	source.addStatements(`import { materialize } from "${selfLocation}"`);
 	// prettier-ignore
 	source.addStatements(`materialize(${func.getName()}, ${target.condition ?? "undefined"}).then(console.log).catch((e:any) => console.error(e.message))`);
 	await source.save();
