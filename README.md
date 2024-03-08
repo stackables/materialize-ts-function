@@ -27,8 +27,6 @@ async function someComplexLogic() {
 
 #### 2. Rewrite the code during build
 
-See `npx materialize-ts-function --help` for more options
-
 ```bash
 npx materialize-ts-function
 ```
