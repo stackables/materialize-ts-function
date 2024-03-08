@@ -84,3 +84,7 @@ To debug one can add the same statement to the file and execute if with
 ```bash
 ts-node ./src/original/file/location.ts
 ```
+
+## Thats it ...
+
+... happy coding :)
