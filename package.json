@@ -8,6 +8,10 @@
 	"files": [
 		"build/src"
 	],
+	"keywords": [
+		"materialize",
+		"stackables"
+	],
 	"scripts": {
 		"prepack": "tsc",
 		"test": "NODE_OPTIONS=\"--experimental-vm-modules\" jest",
