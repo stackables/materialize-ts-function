@@ -16,6 +16,7 @@ describe("test ficture", () => {
 	});
 
 	test("expect both materialize1 and materialize2 to mutate", async () => {
+		//@ts-ignore
 		const module = await import("./fixtures/test-cases.ts");
 		expect(await module.materialize1()).not.toEqual(
 			await module.materialize1()
@@ -33,6 +34,7 @@ describe("test ficture", () => {
 	});
 
 	test("expect only materialize2 to mutate", async () => {
+		//@ts-ignore
 		const module = await import("./fixtures/test-cases.ts");
 		expect(await module.materialize1()).toEqual(await module.materialize1());
 		expect(await module.materialize2()).not.toEqual(
