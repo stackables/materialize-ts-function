@@ -9,8 +9,7 @@
 		"build/src"
 	],
 	"scripts": {
-		"build": "tsc",
-		"prepack": "pnpm build",
+		"prepack": "tsc",
 		"test": "NODE_OPTIONS=\"--experimental-vm-modules\" jest",
 		"semantic-release": "semantic-release -b main"
 	},
