@@ -14,7 +14,14 @@ interface Target {
 
 const selfLocation = join(
 	__dirname,
-	__dirname.endsWith("build") ? "../../" : "./"
+	__dirname.endsWith("build/src") ? "../../" : "./"
+);
+
+const tsNodeLocation = join(
+	selfLocation,
+	__dirname.endsWith("build/src")
+		? "node_modules/.bin/"
+		: "../node_modules/.bin/"
 );
 
 async function materializeFunctionInFile(source: SourceFile, target: Target) {
@@ -56,7 +63,9 @@ async function materializeFunctionInFile(source: SourceFile, target: Target) {
 
 	let error: string | undefined = undefined;
 	try {
-		const result = await execAsync(`ts-node ${source.getFilePath()}`);
+		const result = await execAsync(
+			`${tsNodeLocation}ts-node ${source.getFilePath()}`
+		);
 		try {
 			const data = extractResponse(result.stdout);
 			func.setBodyText(`/* __materialized__ */\nreturn ${data}`);
