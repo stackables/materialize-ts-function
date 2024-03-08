@@ -1,0 +1,42 @@
+{
+	"name": "materialize-ts-function",
+	"version": "1.0.0",
+	"description": "",
+	"main": "build/src/index.js",
+	"types": "build/src/index.d.ts",
+	"bin": "build/src/bin/cli.js",
+	"files": [
+		"build/src"
+	],
+	"scripts": {
+		"build": "tsc",
+		"prepack": "pnpm build",
+		"test": "NODE_OPTIONS=\"--experimental-vm-modules\" jest",
+		"semantic-release": "semantic-release -b main"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/stackables/materialize-ts-function.git"
+	},
+	"author": "",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/stackables/materialize-ts-function/issues"
+	},
+	"homepage": "https://github.com/stackables/materialize-ts-function#readme",
+	"dependencies": {
+		"lodash": "^4.17.21",
+		"ts-morph": "^21.0.1",
+		"ts-node": "^10.9.2"
+	},
+	"devDependencies": {
+		"@tsconfig/node20": "^20.1.2",
+		"@types/jest": "^29.5.12",
+		"@types/lodash": "^4.14.202",
+		"@types/node": "^20.11.25",
+		"esbuild-jest": "^0.5.0",
+		"jest": "^29.7.0",
+		"semantic-release": "^23.0.2",
+		"typescript": "^5.4.2"
+	}
+}
