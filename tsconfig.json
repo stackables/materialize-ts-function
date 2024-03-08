@@ -8,8 +8,8 @@
     "noImplicitOverride": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
-    "module": "NodeNext",
-    "moduleResolution": "NodeNext",
+    "module": "CommonJS",
+    "moduleResolution": "Node",
     "target": "ES2022",
     "lib": [
       "ES2022",
