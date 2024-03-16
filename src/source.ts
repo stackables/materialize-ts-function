@@ -29,7 +29,7 @@ async function findTsNodeLocation() {
 			// just ignore and move on
 		}
 
-		testLocation = dirname(importLocation);
+		testLocation = dirname(testLocation);
 		if (testLocation === "/") {
 			throw new Error("ts-node executable not found");
 		}
