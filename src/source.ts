@@ -17,12 +17,7 @@ const selfLocation = join(
 	__dirname.endsWith("build/src") ? "../../" : "./"
 );
 
-const tsNodeLocation = join(
-	selfLocation,
-	__dirname.endsWith("build/src")
-		? "node_modules/.bin/"
-		: "../node_modules/.bin/"
-);
+const tsNodeLocation = join(selfLocation, "../node_modules/.bin/");
 
 async function materializeFunctionInFile(source: SourceFile, target: Target) {
 	const localPath = relative(cwd(), source.getFilePath());
@@ -86,6 +81,10 @@ async function materializeFunctionInFile(source: SourceFile, target: Target) {
 	source.organizeImports();
 	await source.save();
 	log(`${error ?? "completed"}`);
+
+	if (error) {
+		process.exit(1);
+	}
 }
 
 export async function main(path = "**/*.ts") {
