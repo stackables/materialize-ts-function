@@ -1,5 +1,6 @@
 import { exec } from "child_process";
-import { join, relative } from "path";
+import { lstat } from "fs/promises";
+import { dirname, join, relative } from "path";
 import { cwd } from "process";
 import { Project, SourceFile } from "ts-morph";
 import { promisify } from "util";
@@ -12,12 +13,28 @@ interface Target {
 	condition?: string;
 }
 
-const selfLocation = join(
+const importLocation = join(
 	__dirname,
 	__dirname.endsWith("build/src") ? "../../" : "./"
 );
 
-const tsNodeLocation = join(selfLocation, "../node_modules/.bin/");
+async function findTsNodeLocation() {
+	let testLocation = importLocation;
+	while (true) {
+		const candidateLocation = join(testLocation, "node_modules/.bin/ts-node");
+		try {
+			await lstat(candidateLocation);
+			return candidateLocation;
+		} catch {
+			// just ignore and move on
+		}
+
+		testLocation = dirname(importLocation);
+		if (testLocation === "/") {
+			throw new Error("ts-node executable not found");
+		}
+	}
+}
 
 async function materializeFunctionInFile(source: SourceFile, target: Target) {
 	const localPath = relative(cwd(), source.getFilePath());
@@ -50,7 +67,7 @@ async function materializeFunctionInFile(source: SourceFile, target: Target) {
 	}
 
 	// prettier-ignore
-	source.addStatements(`import { materialize } from "${selfLocation}"`);
+	source.addStatements(`import { materialize } from "${importLocation}"`);
 	// prettier-ignore
 	source.addStatements(`materialize/*remove*/(${func.getName()}, ${target.condition ?? "undefined"}).then(console.log).catch((e:any) => console.error(e.message))`);
 	await source.save();
@@ -59,7 +76,7 @@ async function materializeFunctionInFile(source: SourceFile, target: Target) {
 	let error: string | undefined = undefined;
 	try {
 		const result = await execAsync(
-			`${tsNodeLocation}ts-node ${source.getFilePath()}`
+			`${await findTsNodeLocation()} ${source.getFilePath()}`
 		);
 		try {
 			const data = extractResponse(result.stdout);
@@ -80,11 +97,13 @@ async function materializeFunctionInFile(source: SourceFile, target: Target) {
 
 	source.organizeImports();
 	await source.save();
-	log(`${error ?? "completed"}`);
 
-	if (error) {
+	if (error && error !== "Materialize condition not true") {
+		log(`Error: ${error}`);
 		process.exit(1);
 	}
+
+	log("completed");
 }
 
 export async function main(path = "**/*.ts") {
