@@ -1,7 +1,7 @@
 {
 	"name": "materialize-ts-function",
 	"version": "1.0.0",
-	"description": "",
+	"description": "A simple cli command to materialize the response of a typescript async function during build time",
 	"main": "build/src/index.js",
 	"types": "build/src/index.d.ts",
 	"bin": "build/src/bin/cli.js",
