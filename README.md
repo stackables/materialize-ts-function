@@ -48,7 +48,7 @@ Use any boolean returning expression with `@if` annotation
 
 ```typescript
 /**
- * @materialize
+ * @materialized
  * @if process.env.DEBUG !== undefined
  */
 async function someComplexLogic() {
@@ -58,7 +58,7 @@ async function someComplexLogic() {
 
 ## How it works internally
 
-We scan the codebase for all files containing functions with the `@materialize` annotation and temporarily add a simple statement to the end of the file to make it executable with `ts-node`.
+We scan the codebase for all files containing functions with the `@materialized` annotation and temporarily add a simple statement to the end of the file to make it executable with `ts-node`.
 
 Then we capture the output and replace the annotated functions body with the serialized response from the ts-node execution.
 
@@ -67,7 +67,7 @@ Then we capture the output and replace the annotated functions body with the ser
 import { materialize } from "materialize-ts-function";
 
 materialize(
-	someComplexLogic, // <-- @materialize function
+	someComplexLogic, // <-- @materialized function
 	process.env.DEBUG !== undefined // <-- @if annotation literal
 )
 	.then(console.log)

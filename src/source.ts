@@ -134,7 +134,7 @@ export async function main(path = "**/*.ts") {
 
 			// parse comments
 			comments.forEach((c) => {
-				if (c.includes("@materialized")) {
+				if (c.includes("@materialize")) {
 					materialize = true;
 				}
 				if (c.includes("@if")) {
