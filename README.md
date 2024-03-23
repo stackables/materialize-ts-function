@@ -7,21 +7,20 @@ A simple cli command to materialize the response of a typescript async function 
 
 ## The simplest use-case
 
-#### 1. Annotate your code with @materialize
+#### 1. Annotate your function with @materialized
 
 ```typescript
-import { expensiveResource } from "...";
+import { readFile } from "fs/promises";
 
 /**
- * @materialize
+ * @materialized
  */
-async function someComplexLogic() {
-	const response = await expensiveResource();
-	return {
-		// return anything that survives JSON.stringify()
-		// this can depend on build environment for example
-		...response,
-	};
+async function getVersion() {
+	// return anything that survives JSON.stringify()
+
+	const pkg = await readFile("./package.json");
+	const parsed = JSON.parse(pkg.toString());
+	return parsed.version;
 }
 ```
 
@@ -35,13 +34,11 @@ npx materialize-ts-function
 
 ```typescript
 /**
- * @materialize
+ * @materialized
  */
-async function someComplexLogic() {
-	return Promise.resolve({
-		// JSON.stringify() response from the awaited original function
-		// unneeded imports are removed to not reference dead code
-	});
+async function getVersion() {
+	/* __materialized__ */
+	return "1.0.0";
 }
 ```
 
