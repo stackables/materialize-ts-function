@@ -150,13 +150,10 @@ export async function main(path = "**/*.ts") {
 	}
 
 	// execute
-	const array = [...plan.entries()];
-	await Promise.all(
-		array.map(async ([s, c]) => {
-			for (let i = 0; i < c.length; i++) {
-				await materializeFunctionInFile(s, c[i]);
-				await s.refreshFromFileSystem();
-			}
-		})
-	);
+	for (const [s, c] of plan.entries()) {
+		for (let i = 0; i < c.length; i++) {
+			await materializeFunctionInFile(s, c[i]);
+			await s.refreshFromFileSystem();
+		}
+	}
 }
