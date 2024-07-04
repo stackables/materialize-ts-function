@@ -29,7 +29,7 @@
 	"homepage": "https://github.com/stackables/materialize-ts-function#readme",
 	"dependencies": {
 		"lodash": "^4.17.21",
-		"ts-morph": "^22.0.0",
+		"ts-morph": "^23.0.0",
 		"ts-node": "^10.9.2"
 	},
 	"devDependencies": {
