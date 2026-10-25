@@ -1,3 +1,6 @@
+> [!WARNING]
+> **No longer maintained.** This repository is archived. `materialize-ts-function` stays on npm at its last version (1.6.0), but gets no further updates or security fixes.
+
 [![npm](https://img.shields.io/npm/v/materialize-ts-function?label=materialize-ts-function&logo=npm)](https://www.npmjs.com/package/materialize-ts-function)
 [![codecov](https://codecov.io/gh/stackables/materialize-ts-function/branch/main/graph/badge.svg?token=x1DmWF8EId)](https://codecov.io/gh/stackables/materialize-ts-function)
 
